@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragment/navigation :: head(title)">
+
+<body>
+<!-- Slide-->
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<!-- Navigation-->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5 d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/flexshmall.png" alt="flexshmall" style="width:60px">
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="/user/new">회원가입</a></li>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            </ul>
+            <a class="d-flex" href="/user/login">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-success bg-gradient text-white ms-1 rounded-pill">0</span>
+                </button>
+            </a>
+    </div>
+</nav>
+<!-- Slide-->
+<div class="y_slide">
+    <div><a href="#"><img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/2334681e-8a63-45a0-9fe3-81ec2a08fc35.jpg" alt="이벤트"></a></div>
+    <div><a href="#"><img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/e6c1d4fe-e2a0-46de-9ab8-2176dfd04645.png" alt="장바구니"></a></div>
+    <div><a href="#"><img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/2d190198-477d-400c-8833-62e29ee12efc.jpg" alt="베이커리"></a></div>
+    <div><a href="#"><img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/f6f52dbc-b20f-4d3b-8889-7f06aad7bbf9.jpg" alt="메인베너"></a></div>
+</div>
+<!-- Header-->
+<!--<header class="bg-success bg-gradient py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">쇼핑몰 프로젝트</h1>
+            <p class="lead fw-normal text-white-50 mb-0">MJU Shopping Mall</p>
+        </div>
+    </div>
+</header>-->
+<!-- Section-->
+
+<section class="py-5">
+    <div class="container  px-4 px-lg-5 ">
+        <h5 class="text-center pb-3">🔥이달의 HOT ITEM 추천!🔥</h5>
+        <div class="row gx-5 row-cols-3">
+            <!-- 박스하나 -->
+            <div class="col">
+                <div class="card y_card">
+                    <img
+                            src="https://img-cf.kurly.com/shop/data/goods/1649317238141l0.jpg"
+                            alt="상품이미지" >
+                    <div class="card-body p-4">
+                        <div>
+                            <!-- Product name-->
+                            <h5>[팜에이트] 무농약 간편 샐러드 5종</h5>
+                            <!-- Product price-->
+                            <p>2,000원</p>
+                        </div>
+                        <a class="btn btn-outline-success" href="/item/view/14">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 박스하나 -->
+            <div class="col">
+                <div class="card y_card">
+                    <img
+                            src="https://img-cf.kurly.com/cdn-cgi/image/fit=crop,width=360,height=468,quality=85/shop/data/goods/1637927914559l0.jpg"
+                            alt="상품이미지">
+                    <div class="card-body p-4">
+                        <div>
+                            <!-- Product name-->
+                            <h5>다짐육 150g (냉장)</h5>
+                            <!-- Product price-->
+                            <p>11,540원</p>
+                        </div>
+                        <a class="btn btn-outline-success" href="/item/view/10">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 박스하나 -->
+            <div class="col">
+                <div class="card y_card">
+                    <img
+                            src="https://img-cf.kurly.com/cdn-cgi/image/fit=crop,width=360,height=468,quality=85/shop/data/goods/1648206917161l0.jpeg"
+                            alt="상품이미지">
+                    <div class="card-body p-4">
+                        <div>
+                            <!-- Product name-->
+                            <h5>무항생제 1++ 대란 20구</h5>
+                            <!-- Product price-->
+                            <p>16,500원</p>
+                        </div>
+                        <a class="btn btn-outline-success" href="/item/view/11">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-4 px-lg-5 mt-5">
+        <h5 class="text-center  pb-3">🍇Flexsh Mall의 상품들🍇</h5>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 ">
+            <div class="col mb-5" th:each="item : ${itemlist}">
+                <div class="card y_card">
+                    <!-- Product image -->
+                    <div class="y_card_s_img">
+                        <img class="card-img-top" th:src="@{${item.filepath}}" alt="상품이미지"/>
+                    </div>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div>
+                            <!-- Product name-->
+                            <h5 class="fw-bolder" th:text="${item.name}">item name</h5>
+                            <!-- Product price-->
+                            <p th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}"></p>
+                        </div>
+                        <a class="btn btn-outline-success"th:href="@{/item/view/{id}(id=${item.id})}">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-success bg-gradient">
+    <div class="container"><p class="m-0 text-center text-white">2023 12월 쇼핑몰 프로젝트</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+<script>
+    $('.y_slide').slick({
+        infinite: true,
+        speed: 500,
+        fade: true,
+        autoplay: true
+    });
+</script>
+</html>

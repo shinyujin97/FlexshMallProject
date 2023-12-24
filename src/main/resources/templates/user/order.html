@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>주문내역</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles2.css" rel="stylesheet"/>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="fragment/navigation :: menu(${user})">
+
+</nav>
+
+<div class="container-fluid y_expnav_height">
+    <div class="row">
+
+        <!-- SIDE BAR -->
+        <nav id="sidebarMenu" class="col-md-3 d-md-block bg-light sidebar collapse"
+             th:replace="fragment/navigation :: side(${user})">
+
+        </nav>
+
+        <main class="col-md-9 px-4 py-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>주문내역</h2>
+            </div>
+            <hr/>
+            <div class="table-responsive" th:each="order : ${orderList}" style="padding: 20px;">
+                <h4>
+                    <span th:text="'주문날짜 : ' + ${order.getCreateDate()}"></span>
+                    <span class="badge bg-secondary" th:text="${order.status}"
+                          th:if="${order.status == '주문 완료'}">주문 완료</span>
+                    <span class="badge bg-success" th:text="${order.status}"
+                          th:if="${order.status == '배송 대기'}">주문 완료</span>
+                    <span class="badge bg-info" th:text="${order.status}" th:if="${order.status == '배송중'}">주문 완료</span>
+                    <span class="badge bg-primary" th:text="${order.status}"
+                          th:if="${order.status == '배송 완료'}">주문 완료</span>
+                    <span class="badge bg-danger" th:text="${order.status} + '대기'"
+                          th:if="${order.status == '환불'}">주문 완료</span>
+                    <span class="badge bg-danger" th:text="${order.status}"
+                          th:if="${order.status == '환불 완료'}">주문 완료</span>
+                </h4>
+                <span th:text="'주문자명 : ' + ${requestDto.name}"></span>
+                <span th:text="'주문자 주소 : ' + ${requestDto.address}"></span>
+                <span th:text="'요청 사항 : ' + ${requestDto.request}"></span>
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">합계</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${order.order_items}">
+                        <td th:text="${item.id}">아이템번호</td>
+                        <td>
+                            <a th:href="@{/item/view/{id}(id=${item.item.id})}"
+                               th:text="${item.item.name}"></a>
+                        </td>
+                        <td th:text="${item.getCount()}">수량</td>
+                        <td th:text="${#numbers.formatInteger(item.price, 1, 'COMMA') + '원'}">가격</td>
+                        <td th:text="${#numbers.formatInteger(item.price * item.count, 1, 'COMMA') + '원'}">합계</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td th:text="${#numbers.formatInteger(order.price, 1, 'COMMA') + '원'}"> 총 가격</td>
+                    </tr>
+                    </tfoot>
+                </table>
+                <!--                <form th:action="@{/order/update/{id}(id=${order.id})}" th:if="${order.status != '환불 완료'}" method="post"-->
+                <!--                      class="d-flex">-->
+                <form th:action="@{/order/update/{id}(id=${order.id})}" th:if="${order.status != '환불 완료'}" method="post"
+                      class="d-flex" onsubmit="return confirm('환불하시겠습니까?')">
+                    <div class="container">
+                        <select name="status" style="display: none">
+                            <option value="환불">환불</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-success flex-shrink-0" type="submit">
+                            환불
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <hr>
+        </main>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+</html>

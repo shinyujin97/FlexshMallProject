@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>회원관리</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles2.css" rel="stylesheet"/>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="fragment/navigation :: menu(${user})">
+
+</nav>
+
+<div class="container-fluid y_expnav_height">
+    <div class="row">
+
+        <!-- SIDE BAR -->
+        <nav id="sidebarMenu" class="col-md-3 d-md-block bg-light sidebar collapse"
+             th:replace="fragment/navigation :: side(${user})">
+
+        </nav>
+
+        <main class="col-md-9 px-4 py-4 y_expnav_height">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>회원 관리</h2>
+            </div>
+            <hr/>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">UserRole</th>
+                        <th scope="col">UpdateRole</th>
+                        <th scope="col">UserEmail</th>
+                        <th scope="col">UserMoney</th>
+                        <th scope="col">CreateDate</th>
+                        <th scope="col">Update</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="users : ${userList}">
+                        <form th:action="@{/user/change/{id}(id=${users.id})}" method="post" class="d-flex">
+                            <td th:text="${users.getId()}">1</td>
+                            <td th:text="${users.getName()}">name</td>
+                            <td th:text="${users.getUsername()}">username</td>
+                            <td th:text="${users.getRole()}">role</td>
+                            <td>
+                                <label>
+                                    <select name="role">
+                                        <option value="ROLE_USER">ROLE_USER</option>
+                                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                                    </select>
+                                </label>
+                            </td>
+                            <td th:text="${users.getEmail()}">email</td>
+                            <td th:text="${users.getMoney()}">money</td>
+                            <td th:text="${users.getCreateDate()}">createdate</td>
+                            <td>
+                                <button class="btn btn-outline-success flex-shrink-0 btn-sm" type="submit">
+                                    업데이트
+                                </button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+</html>

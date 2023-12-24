@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>장바구니</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles2.css" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <script th:inline="javascript">
+        function getUserInfo() {
+            // AJAX를 이용하여 서버에 사용자 정보를 요청
+            $.ajax({
+                type: 'GET',
+                url: '/user/getUserInfo',
+                success: function (data) {
+                    // 서버로부터 받은 데이터를 폼에 채우기
+                    $('#name').val(data.name);
+                    $('#phoneNumber').val(data.phoneNumber);
+                    $('#addr1').val(data.addr1);
+                    $('#addr2').val(data.addr2);
+                    $('#addr3').val(data.addr3);
+                },
+                error: function (error) {
+                    console.error('Failed to get user info:', error);
+                }
+            });
+        }
+    </script>
+
+    <script th:src="@{https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js}"></script>
+    <script th:inline="javascript">
+        function execPostCode() {
+         new daum.Postcode({
+             oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                console.log(data.zonecode);
+                console.log(fullRoadAddr);
+
+
+                $("[name=addr1]").val(data.zonecode);
+                $("[name=addr2]").val(fullRoadAddr);
+
+                /* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+                document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress; */
+            }
+         }).open();
+     }
+    </script>
+
+    <!--구매하기 확인 스크립트-->
+    <script th:inline="javascript">
+        function validateFormAndCheckout() {
+            var cartItems = [[${cartDto.cartItems.size()}]]; // 장바구니 아이템 갯수
+            var name = document.getElementById("name").value;
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            var addr1 = document.getElementById("addr1").value;
+
+            if(cartItems <= 0) {
+                alert('담긴 상품이 없습니다.');
+                return false;
+            } else if(name === "" || phoneNumber === "" || addr1 === "") {
+                alert('이름, 전화번호, 주소는 반드시 입력해야 합니다.');
+                return false;
+            } else {
+                return confirm('정말 구매하시겠습니까?');
+            }
+        }
+    </script>
+
+
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="fragment/navigation :: menu(${user})">
+
+</nav>
+
+<div class="container-fluid y_expnav_height">
+    <div class="row">
+
+        <!-- SIDE BAR -->
+        <nav id="sidebarMenu" class="col-md-3 d-md-block bg-light sidebar collapse"
+             th:replace="fragment/navigation :: side(${user})">
+
+        </nav>
+
+        <main class="col-md-9 px-4 py-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>장바구니</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">상품ID</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">담은날짜</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${cartDto.cartItems.size() > 0}" th:each="cart_item, i : ${cartDto.cartItems}">
+                        <td th:text="${i.count}">1</td>
+                        <td th:text="${cart_item.getItemId()}">3번상품</td>
+                        <td>
+                            <a th:href="@{/item/view/{id}(id=${cart_item.getItemId()})}"
+                               th:text="${cart_item.getItemName()}"></a>
+                        </td>
+                        <td th:text="${cart_item.getCount()}">수량</td>
+                        <td th:text="${#numbers.formatInteger(cart_item.getPrice() * cart_item.getCount(), 1, 'COMMA') + '원'}">가격</td>
+                        <td th:text="${cart_item.getCreateDate()}">날짜</td>
+                        <td class="btn btn-outline-success">
+                            <a onclick="return confirm('정말 삭제하시겠습니까?');"
+                               th:href="@{/user/{id}/cart/{cart_itemId}/delete(id=${user.id}, cart_itemId=${cart_item.getId()})}"
+                               style="text-decoration: none">삭제</a>
+                        </td>
+                        <!--<td class="btn btn-outline-success">
+                            <a th:href="@{/user/{id}/cart/{cart_itemId}/delete(id=${user.id}, cart_itemId=${cart_item.getId()})}"
+                               style="text-decoration: none">삭제</a></td>-->
+                    </tr>
+                    <tr th:unless="${cartDto.cartItems != null and cartDto.cartItems.size() > 0}">
+                        <td colspan="7">장바구니가 비어 있습니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+
+
+            <div class="row row-cols-2 mb-3 text-center mt-3">
+                <!-- 좌측추가 -->
+
+                <div class="col-8 y_userInfo">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3 px-4">
+                            <h4 class="my-0 fw-normal">배송지 정보</h4>
+                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="getUserInfo()">기존 사용자
+                                정보 가져오기
+                            </button>
+                        </div>
+                        <form class="card-body container" th:action="@{/user/{id}/cart/checkout(id=${user.getId()})}"
+                              method="post" th:object="${requestDto}">
+                            <div class="row">
+                                <label class="form-label col-sm-3" for="name">주문자 이름</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="name" name="name" class="form-control form-control-sm"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="form-label col-sm-3" for="phoneNumber">수령자 전화번호</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="phoneNumber" name="phoneNumber"
+                                           class="form-control form-control-sm"/>
+                                </div>
+                            </div>
+                            <!-- 주소 -->
+                            <div class="row">
+                                <label class="form-label col-sm-3" for="addr1">수령자 주소</label>
+                                <div class="col-sm-9">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <input type="text" id="addr1" name="addr1"
+                                                       class="form-control form-control-sm"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        onclick="execPostCode()">주소검색
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" id="addr2" name="addr2"
+                                                       class="form-control form-control-sm"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" id="addr3" name="addr3"
+                                                       class="form-control form-control-sm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- 주소 -->
+
+                            <div class="row">
+                                <label class="form-label col-sm-3" for="request">요청사항</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="request" name="request"
+                                              style="height: 100px"></textarea>
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <button type="submit" onclick="return validateFormAndCheckout();" class="w-100 btn btn-lg btn-outline-primary">구매하기</button>
+                            </div>
+                           <!-- <div class="row px-2">
+                                <button type="submit" class="w-100 btn btn-lg btn-outline-primary">구매하기</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+                <!-- 좌측추가 -->
+
+                <div class="col-4">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">총 결제금액</h4>
+                        </div>
+                        <form class="card-body">
+                            <h1 class="card-title pricing-card-title" th:text="${#numbers.formatInteger(cartDto.totalPrice, 1, 'COMMA') + '₩'}">$0</h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>잘못 담은 물건이 있는지 확인해보세요!</li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+</html>

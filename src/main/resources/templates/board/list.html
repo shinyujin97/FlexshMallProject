@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/fragment/navigation :: head('게시판')">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/page.css">
+    <link href="/css/styles.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="/fragment/navigation :: menu(${user})"></nav>
+
+<div class="container-fluid">
+    <div class="row" style="flex-wrap: nowrap;">
+
+        <!-- SIDE BAR -->
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:replace="/fragment/navigation :: side(${user})"></nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h2>고객 게시판</h2>
+
+            <!-- All posts -->
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th style="text-align: center;">제목</th>
+                    <th style="text-align: center;">작성자</th>
+                    <th style="text-align: center;">작성일</th>
+                </tr>
+                <tr th:each="board : ${adminBoards}" style="height: 20px;"> <!-- 높이 조절 -->
+                    <td style="background-color: #ffe6e6; color: #ff0000; text-align: center; width: 70px; font-weight: bold;" th:text="' 공지 '"></td>
+                    <td style="text-align: center;"><a th:href="@{/board/read/{id}(id=${board.id})}" th:text="${board.title}"></a></td>
+                    <td style="text-align: center;" th:text="${#lists.contains(adminUsernames, board.author) ? '관리자' : board.author}"></td>
+                    <td style="text-align: center;" th:text="${board.modifiedDate}"></td>
+                </tr>
+                <tr th:each="board : ${boardList.content}" style="height: 20px;">
+                    <td style="width: 70px; height: 40px; text-align: center;">
+                        <img src="/assets/board.png" style="width: 100%; height: 100%;">
+                    </td>
+                    <td style="text-align: center;">
+                        <a th:href="@{/board/read/{id}(id=${board.id})}" th:text="${board.title}"></a>
+                    </td>
+                    <td style="text-align: center;" th:text="${board.author}"></td>
+                    <td style="text-align: center;" th:text="${board.modifiedDate}"></td>
+                </tr>
+            </table>
+
+            <div class="d-flex align-items-center justify-content-start mt-3">
+                <div class="me-3 mt-3">
+                    <a th:href="@{/board/create}" class="btn btn-outline-success" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">작성</a>
+                </div>
+                <div class="ms-auto me-3 mt-4" style="width: 67%;">
+                    <ul class="pagination justify-content-start">
+                        <li class="page-item" th:classappend="${boardList.number == 0} ? disabled : ''">
+                            <a class="page-link" th:href="${boardList.number == 0} ? '#' : @{/board/list(page=${boardList.number-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, boardList.totalPages-1)}">
+                            <span th:if="${pageNum == boardList.number}" class="page-link" style="font-weight: bold" th:text="${pageNum + 1}"></span>
+                            <a th:if="${pageNum != boardList.number}" class="page-link"
+                               th:href="@{/board/list(page=${pageNum})}"
+                               th:text="${pageNum + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${boardList.number+1 == boardList.totalPages} ? disabled : ''">
+                            <a class="page-link" th:href="${boardList.number+1 == boardList.totalPages} ? '#' : @{/board/list(page=${boardList.number+1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Flexsh Mall</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles2.css" rel="stylesheet"/>
+
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="menu(user)">
+    <div class="container px-4 px-lg-5 d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/main">
+            <img src="/assets/flexshmall.png" alt="flexshmall" style="width:60px">
+        </a>
+        <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><h5 class="nav-link" sec:authorize="isAuthenticated()"
+                                         th:text="${user.username} + '님'">Username</h5></li>
+<!--                <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>-->
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" id="Mynavbar" role="button" data-bs-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">마이페이지</a>
+                    <ul class="dropdown-menu" aria-labelledby="Mynavbar">
+                        <li><a class="dropdown-item" th:href="@{/user/{id}(id=${user.id})}">내 정보</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')"
+                               th:href="@{/user/{id}/admin(id=${user.id})}">회원 관리</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_USER')"
+                               th:href="@{/user/{id}/order(id=${user.id})}">주문 내역</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/board/list}">고객 게시판</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/item/write">상품 등록</a>
+                        </li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')"
+                               th:href="@{/user/{id}/item(id=${user.id})}">등록한 상품</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')"
+                               th:href="@{/user/{id}/sale(id=${user.id})}">판매 현황</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')"
+                               th:href="@{/user/{id}/saleinfo(id=${user.id})}">매출 현황</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+                    </ul>
+                    <!--                <li class="nav-item"><a class="nav-link" th:href="@{/user/{id}(id=${user.id})}">마이페이지</a></li>-->
+            </ul>
+        <form class="d-flex">
+            <a class="btn btn-outline-success btn-sm" style="margin-right:8px" th:href="@{/user/{id}/cash(id=${user.id})}"
+               th:text="'현재 잔액 : ' + ${#numbers.formatInteger(user.money, 1, 'COMMA') + '₩'}"></a>
+            <a class="btn btn-outline-success  btn-sm" sec:authorize="hasRole('ROLE_USER')"
+               th:href="@{/user/{id}/cart(id=${user.id})}">
+                <i class="bi-cart-fill me-1"></i>
+                Cart
+                <span class="badge bg-success bg-gradient text-white ms-1 rounded-pill"
+                      th:text="${user.cart != null ? user.cart.count : 0}">0</span>
+            </a>
+        </form>
+    </div>
+</nav>
+
+<!-- SIDE BAR -->
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="side(user)">
+    <div class="position-sticky pt-3">
+        <ul class="nav flex-column y_sidenav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}(id=${user.id})}">
+                    <span data-feather="mypage"></span>
+                    내 정보
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/user/{id}/cart(id=${user.id})}"
+                   sec:authorize="hasRole('ROLE_USER')">
+                    <span data-feather="cart"></span>
+                    장바구니
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}/order(id=${user.id})}" sec:authorize="hasRole('ROLE_USER')">
+                    <span data-feather="order"></span>
+                    주문내역
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/board/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <span data-feather="board"></span>
+                    고객 게시판
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/item/write" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span data-feather="itemwrite"></span>
+                    상품 등록
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}/item(id=${user.id})}" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span data-feather="myitem"></span>
+                    등록한 상품
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}/sale(id=${user.id})}" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span data-feather="sale"></span>
+                    판매 현황
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}/saleinfo(id=${user.id})}"
+                   sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span data-feather="sale"></span>
+                    매출 현황
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/{id}/admin(id=${user.id})}" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span data-feather="admin"></span>
+                    회원 관리
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
