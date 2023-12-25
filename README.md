@@ -48,7 +48,7 @@
 ### 🖥️구동화면
 |`회원가입 및 로그인`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/49487740-08b9-468c-8d6a-68b5917b0d48" width="850" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/49487740-08b9-468c-8d6a-68b5917b0d48" width="830" height="600">|
 
 |`상품 등록`|
 |-------|
