@@ -42,8 +42,7 @@
   - 장바구니에서 배송지 정보 입력시 카카오 MAP API사용 주소 불러오기/ 및 회원가입시 기존 사용자의 주소 Script사용하여 가져오기 가능
   - 구매자 잔액 감소 및 관리자 잔액 증가 구현완료.
 
-
-
+![상세페이지](https://github.com/shinyujin97/FlexshMallProject/assets/79908872/fa725469-73b9-4cbe-97e5-4939c2f82de8)
 
 
 ### 🖥️구동화면
@@ -53,7 +52,7 @@
 
 |`상품 등록`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="800" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/10ccc850-b518-47f6-b29e-9817e6e4ca90" width="800" height="600">|
 
 |`금액 충전`|
 |-------|
@@ -81,7 +80,7 @@
 
 |`상세페이지`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be01" width="800" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/fa725469-73b9-4cbe-97e5-4939c2f82de8" width="800" height="600">|
 
 
 
