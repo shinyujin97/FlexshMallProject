@@ -164,3 +164,6 @@
     └── application.properties
     └── log4jdbc.log4j2.properties
 ```
+
+## 👨‍💻팀원 소개![image](https://github.com/shinyujin97/FlexshMallProject/assets/79908872/c3fd6801-a620-4919-8058-3fcc9aae8f16)
+
