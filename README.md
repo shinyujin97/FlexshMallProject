@@ -44,43 +44,42 @@
 
 
 
-
 ### 🖥️구동화면
 |`회원가입 및 로그인`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/49487740-08b9-468c-8d6a-68b5917b0d48" width="810" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/49487740-08b9-468c-8d6a-68b5917b0d48" width="800" height="600">|
 
 |`상품 등록`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="800" height="600">|
 
 |`금액 충전`|
 |-------|
 |<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
 
-|`주문 및 배`|
+|`주문 및 배송`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="950" height="600">|
 
 |`환불 처리`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be01" width="950" height="600">|
 
-|`환불 처리`|
+|`게시판 작성`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/cbc41a35-951e-4b89-ae55-f2a4d57637c8" width="950" height="600">|
 
-|`환불 처리`|
+|`매출 현황`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/18f13791-7131-4c91-83c6-c574ed3a1bac" width="950" height="600">|
 
-|`환불 처리`|
+|`메인페이지`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="950" height="600">|
 
-|`환불 처리`|
+|`상세페이지지`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f1" width="950" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be01" width="950" height="600">|
 
 
 
