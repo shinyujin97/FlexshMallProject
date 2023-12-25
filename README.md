@@ -65,7 +65,7 @@
 
 |`환불 처리`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be01" width="800" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/1e1d8abd-b3b4-4377-b084-a5dea3c6a02b" width="800" height="600">|
 
 |`게시판 작성`|
 |-------|
