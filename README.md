@@ -76,12 +76,11 @@
 
 |`메인페이지`|
 |-------|
-|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="800" height="600">|
+|<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/f87d73bb-f35f-44f6-9519-b40246b61cc5" width="800" height="600">|
 
 |`상세페이지`|
 |-------|
 |<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/fa725469-73b9-4cbe-97e5-4939c2f82de8" width="800" height="600">|
-
 
 
 
