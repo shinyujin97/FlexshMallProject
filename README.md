@@ -130,7 +130,7 @@
   <img src="https://img.shields.io/badge/GitKraken-%238A4182?style=for-the-badge&logo=GitKraken&logoColor=white">
 </div>
 
-#### 폴더 컨벤션
+#### 패키지 구조
 ```
 📦FlexshMall
 ├── 🗂️.gradle
