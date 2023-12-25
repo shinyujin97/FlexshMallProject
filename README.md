@@ -43,7 +43,6 @@
   - 구매자 잔액 감소 및 관리자 잔액 증가 구현완료.
 
 
-
 ### 🖥️구동화면
 |`회원가입 및 로그인`|
 |-------|
@@ -77,7 +76,7 @@
 |-------|
 |<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be0f" width="800" height="600">|
 
-|`상세페이지지`|
+|`상세페이지`|
 |-------|
 |<img src="https://github.com/shinyujin97/FlexshMallProject/assets/79908872/555beded-bfb2-47ed-8147-788a855be01" width="800" height="600">|
 
