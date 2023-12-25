@@ -166,3 +166,7 @@
 
 ## 👨‍💻팀원 소개![image](https://github.com/shinyujin97/FlexshMallProject/assets/79908872/c3fd6801-a620-4919-8058-3fcc9aae8f16)
 
+## 협업툴(GitKraken)
+깃크라켄을 사용하여 진행상황을 공유, 관리함
+![gitkraken](https://github.com/shinyujin97/FlexshMallProject/assets/79908872/728a1448-314d-4073-a575-58db6eb88503)
+
